@@ -1,0 +1,6 @@
+env/
+text=auto eol=lf
+
+# model
+models/mistral-7b-instruct-v0.1.Q5_K_M.gguf
+models/llava/ggml-model-q5_k.gguf
