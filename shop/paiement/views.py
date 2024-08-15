@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import CartItem
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -26,9 +27,22 @@ def cart_view(request):
     return render(request, 'index_paiement.html', context)
 
 
+# def checkout_view(request):
+#     if request.method == 'POST':
+#         # Process payment logic here (e.g., integrating with a payment gateway)
+#         CartItem.objects.all().delete()  # Clear the cart after payment
+#         return render(request, 'payment_success.html')
+#     return redirect('cart_view')
 def checkout_view(request):
     if request.method == 'POST':
-        # Process payment logic here (e.g., integrating with a payment gateway)
-        CartItem.objects.all().delete()  # Clear the cart after payment
-        return render(request, 'payment_success.html')
-    return redirect('cart_view')
+        CartItem.objects.all().delete()
+        
+        # Simuler un traitement de paiement
+        paiement_reussi = True  # Remplacer par votre logique de traitement
+        
+        if paiement_reussi:
+            # 2. Retourner une réponse JSON indiquant le succès du paiement
+            return JsonResponse({'status': 'success', 'message': 'Achat effectué avec succès'})
+        else:
+            return JsonResponse({'status': 'failure', 'message': 'Erreur lors du paiement'})
+    return JsonResponse({'status': 'failure', 'message': 'Requête invalide'}, status=400)

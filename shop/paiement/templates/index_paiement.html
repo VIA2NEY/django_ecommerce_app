@@ -94,7 +94,7 @@
                 </div>
                 <div class="col-lg-4">
                     <br><br>
-                    <form method="post" action="{% url 'checkout_view' %}">
+                    <form id="paymentForm" method="post" action="{% url 'checkout_view' %}">
                         {% csrf_token %}
                         <div class="cart__total">
                             <h6>Montant de l'achat</h6>
@@ -102,7 +102,8 @@
                                 <!-- <li>Subtotal <span>$ 169.50</span></li> -->
                                 <li>Total <span>{{ total_price }} Fcfa</span></li>
                             </ul>
-                                <button class="primary-btn" type="submit">Faire le paiement</button>
+                                <!-- <button class="primary-btn" type="submit">Faire le paiement</button> -->
+                                <button type="button" id="paymentButton" class="primary-btn">Payer</button>
                                 <!-- <a class="primary-btn" type="submit"></a> -->
                             <!-- Boutton pour payer -->
                         </div>
@@ -113,22 +114,60 @@
     </section>
     <!-- Shopping Cart Section End -->
 
+    <!-- Modal pour afficher le succès du paiement -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Achat effectué</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Votre achat a été effectué avec succès.
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'home_index' %}" class="btn btn-primary">Retourner à la page principale</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer Section Begin -->
     <footer class="py-5 bg-dark">
         <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Dominatis 2024</p></div>
     </footer>
     <!-- Footer Section End -->
 
-    <!-- Search Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search End -->
+
+    <!-- Script pour gérer le paiement -->
+    <script>
+        document.getElementById('paymentButton').addEventListener('click', function() {
+            const paymentForm = document.getElementById('paymentForm');
+
+            fetch(paymentForm.action, {
+                method: 'POST',
+                body: new FormData(paymentForm),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Utiliser jQuery pour gérer le modal
+                    $('#paymentModal').modal('show');
+                } else {
+                    alert('Erreur lors du paiement. Veuillez réessayer.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+        });
+    </script>
+
 
     <!-- Js Plugins -->
     <!-- <script src="js/jquery-3.3.1.min.js"></script>
