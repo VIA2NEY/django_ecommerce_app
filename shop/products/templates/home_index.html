@@ -37,7 +37,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    <form class="d-flex" method="get" action="{% url 'cart_view' %}">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
@@ -79,7 +79,10 @@
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
                                     <a class="btn btn-outline-dark mt-auto" href="{% url 'product_detail' product.id %}">View details</a>
-                                    <a class="btn btn-outline-dark mt-auto" href="{% url 'cart' %}">Add to cart</a>
+                                    <form method="post" action="{% url 'add_to_cart' product.id %}">
+                                        {% csrf_token %}
+                                        <a class="btn btn-outline-dark mt-auto" href="{% url 'add_to_cart' product.id %}" type="submit">Add to cart</a>
+                                    </form>                                   
                                 </div>
                             </div>
                         </div>

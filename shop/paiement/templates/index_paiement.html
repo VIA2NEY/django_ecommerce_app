@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css"> -->
+    <link rel="stylesheet" href="{% static 'paiement/css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'paiement/css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'paiement/css/elegant-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'paiement/css/magnific-popup.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'paiement/css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'paiement/css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'paiement/css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'paiement/css/style.css' %}" type="text/css">
+</head>
+
+<body>
+
+    <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Liste des article dans le panier -->
+                    {% if cart_items %}
+                        <div class="shopping__cart__table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Produit</th>
+                                        <th>Quantité</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for item in cart_items %}
+                                        <tr>
+                                            <td class="product__cart__item">
+                                                <div class="product__cart__item__pic">
+                                                    <img src="{{ item.product.image.url }}" alt="">
+                                                </div>
+                                                <div class="product__cart__item__text">
+                                                    <h6>{{ item.product.name }}</h6>
+                                                    <h5>{{ item.product.price }}</h5>
+                                                </div>
+                                            </td>
+                                            <td class="quantity__item">
+                                                <div class="quantity">
+                                                    <div class="pro-qty-2">
+                                                        <input type="text" value="{{ item.quantity }}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="cart__price">{{ item.get_total_price }} Fcfa</td>
+                                            <td class="cart__close"><i class="fa fa-close"></i></td>
+                                        </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>Aucun articles pour l'instant.</p>
+                    {% endif %}
+                    <!-- Boutton pour repartir a la home index -->
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="continue__btn">
+                                <a href="{% url 'home_index' %}">Continuer les achats</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <br><br>
+                    <form method="post" action="{% url 'checkout_view' %}">
+                        {% csrf_token %}
+                        <div class="cart__total">
+                            <h6>Montant de l'achat</h6>
+                            <ul>
+                                <!-- <li>Subtotal <span>$ 169.50</span></li> -->
+                                <li>Total <span>{{ total_price }} Fcfa</span></li>
+                            </ul>
+                                <button class="primary-btn" type="submit">Faire le paiement</button>
+                                <!-- <a class="primary-btn" type="submit"></a> -->
+                            <!-- Boutton pour payer -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Dominatis 2024</p></div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <!-- <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script> -->
+    <script src="{% static 'paiement/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'paiement/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'paiement/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'paiement/js/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static 'paiement/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'paiement/js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'paiement/js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'paiement/js/mixitup.min.js' %}"></script>
+    <script src="{% static 'paiement/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'paiement/js/main.js' %}"></script>
+</body>
+
+</html>
